@@ -70,19 +70,22 @@ minetest.register_craft({
 	burntime = 1,
 })
 
-nyancat = {}
-
+-- Place Nyan or Pup with Rainbow
 function place(pos, facedir, length)
+
 	if facedir > 3 then
 		facedir = 0
 	end
+
 	local tailvec = minetest.facedir_to_dir(facedir)
 	local p = {x = pos.x, y = pos.y, z = pos.z}
+
 	if math.random(1, 2) == 1 then
 		minetest.set_node(p, {name = "pbj_pup:pbj_pup", param2 = facedir})
 	else
 		minetest.set_node(p, {name = "nyancat:nyancat", param2 = facedir})
 	end
+
 	for i = 1, length do
 		p.x = p.x + tailvec.x
 		p.z = p.z + tailvec.z
@@ -93,31 +96,33 @@ end
 -- Do we generate PB&J Pup and Nyan Cat's in world?
 if minetest.setting_getbool("pbj_pup_generate") ~= false then
 
-function generate(minp, maxp, seed)
-	local height_min = -31000
-	local height_max = -32
-	if maxp.y < height_min or minp.y > height_max then
-		return
-	end
-	local y_min = math.max(minp.y, height_min)
-	local y_max = math.min(maxp.y, height_max)
-	local volume = (maxp.x - minp.x + 1) * (y_max - y_min + 1) * (maxp.z - minp.z + 1)
-	local pr = PseudoRandom(seed + 9324342)
-	local max_num_nyancats = math.floor(volume / (16 * 16 * 16))
-	for i = 1, max_num_nyancats do
-		if pr:next(0, 1000) == 0 then
+	function generate(minp, maxp, seed)
+
+		local height_min = -31000
+		local height_max = -32
+		local chance = 1000
+
+		if maxp.y < height_min or minp.y > height_max then
+			return
+		end
+
+		local y_min = math.max(minp.y, height_min)
+		local y_max = math.min(maxp.y, height_max)
+		local pr = PseudoRandom(seed + 9324342)
+
+		if pr:next(0, chance) == 0 then
+
 			local x0 = pr:next(minp.x, maxp.x)
 			local y0 = pr:next(minp.y, maxp.y)
 			local z0 = pr:next(minp.z, maxp.z)
 			local p0 = {x = x0, y = y0, z = z0}
+
 			place(p0, pr:next(0, 3), pr:next(3, 15))
 		end
 	end
+
+	minetest.register_on_generated(generate)
 end
-
-minetest.register_on_generated(generate)
-
-end -- END if
 
 -- Legacy
 minetest.register_alias("default:nyancat", "nyancat:nyancat")
