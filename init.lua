@@ -122,6 +122,8 @@ if minetest.setting_getbool("pbj_pup_generate") ~= false then
 	end
 
 	minetest.register_on_generated(generate)
+
+	default.generate_nyancats = generate --Legacy
 end
 
 -- Legacy
@@ -131,4 +133,3 @@ minetest.register_alias("pbj_pup:pbj_pup_candies", "nyancat:nyancat_rainbow")
 minetest.register_alias("nyancat", "nyancat:nyancat")
 minetest.register_alias("nyancat_rainbow", "nyancat:nyancat_rainbow")
 default.make_nyancat = place
-default.generate_nyancats = generate
