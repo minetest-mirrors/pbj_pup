@@ -15,13 +15,13 @@ minetest.register_node("pbj_pup:pbj_pup", {
 	groups = {cracky = 2},
 	is_ground_content = false,
 	legacy_facedir_simple = true,
-	sounds = default.node_sound_defaults(),
+	sounds = default.node_sound_defaults()
 })
 
 minetest.register_craft({
 	type = "fuel",
 	recipe = "pbj_pup:pbj_pup",
-	burntime = 1,
+	burntime = 10
 })
 
 minetest.register_node(":nyancat:nyancat", {
@@ -40,13 +40,13 @@ minetest.register_node(":nyancat:nyancat", {
 	groups = {cracky = 2},
 	is_ground_content = false,
 	legacy_facedir_simple = true,
-	sounds = default.node_sound_defaults(),
+	sounds = default.node_sound_defaults()
 })
 
 minetest.register_craft({
 	type = "fuel",
 	recipe = "nyancat:nyancat",
-	burntime = 1,
+	burntime = 10
 })
 
 minetest.register_node(":moognu:moognu", {
@@ -57,20 +57,21 @@ minetest.register_node(":moognu:moognu", {
 		"moognu_side.png",
 		"moognu_side.png",
 		"moognu_back.png",
-		"moognu_front.png"},
+		"moognu_front.png"
+	},
 	paramtype = "light",
 	light_source = default.LIGHT_MAX,
 	paramtype2 = "facedir",
 	groups = {cracky = 2},
 	is_ground_content = false,
 	legacy_facedir_simple = true,
-	sounds = default.node_sound_defaults(),
+	sounds = default.node_sound_defaults()
 })
 
 minetest.register_craft({
 	type = "fuel",
 	recipe = "moognu:moognu",
-	burntime = 1,
+	burntime = 10
 })
 
 minetest.register_node(":nyancat:nyancat_rainbow", {
@@ -85,13 +86,13 @@ minetest.register_node(":nyancat:nyancat_rainbow", {
 	paramtype2 = "facedir",
 	groups = {cracky = 2},
 	is_ground_content = false,
-	sounds = default.node_sound_defaults(),
+	sounds = default.node_sound_defaults()
 })
 
 minetest.register_craft({
 	type = "fuel",
 	recipe = "nyancat:nyancat_rainbow",
-	burntime = 1,
+	burntime = 10
 })
 
 -- Place Nyan or Pup with Rainbow
@@ -106,17 +107,23 @@ local function place(pos, facedir, length)
 	local num = math.random(1, 3)
 
 	if num == 1 then
+
 		minetest.set_node(p, {name = "pbj_pup:pbj_pup", param2 = facedir})
+
 	elseif num == 2 then
+
 		minetest.set_node(p, {name = "nyancat:nyancat", param2 = facedir})
+
 	else
 		minetest.set_node(p, {name = "moognu:moognu", param2 = facedir})
 	end
 
 	for i = 1, length do
+
 		p.x = p.x + tailvec.x
 		p.z = p.z + tailvec.z
-		minetest.set_node(p, {name = "nyancat:nyancat_rainbow", param2 = facedir})
+
+		minetest.swap_node(p, {name = "nyancat:nyancat_rainbow", param2 = facedir})
 	end
 end
 
