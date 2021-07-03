@@ -14,7 +14,6 @@ minetest.register_node("pbj_pup:pbj_pup", {
 	paramtype2 = "facedir",
 	groups = {cracky = 2},
 	is_ground_content = false,
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_glass_defaults()
 })
 
@@ -39,7 +38,6 @@ minetest.register_node(":nyancat:nyancat", {
 	paramtype2 = "facedir",
 	groups = {cracky = 2},
 	is_ground_content = false,
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_glass_defaults()
 })
 
@@ -64,7 +62,6 @@ minetest.register_node(":moognu:moognu", {
 	paramtype2 = "facedir",
 	groups = {cracky = 2},
 	is_ground_content = false,
-	legacy_facedir_simple = true,
 	sounds = default.node_sound_glass_defaults()
 })
 
@@ -95,7 +92,9 @@ minetest.register_craft({
 	burntime = 10
 })
 
--- Place Nyan or Pup with Rainbow
+local types = {"pbj_pup:pbj_pup", "nyancat:nyancat", "moognu:moognu"}
+
+-- Place Nyan, Pup or MooGnu with Rainbow
 local function place(pos, facedir, length)
 
 	if facedir > 3 then
@@ -104,19 +103,9 @@ local function place(pos, facedir, length)
 
 	local tailvec = minetest.facedir_to_dir(facedir)
 	local p = {x = pos.x, y = pos.y, z = pos.z}
-	local num = math.random(1, 3)
+	local num = math.random(#types)
 
-	if num == 1 then
-
-		minetest.set_node(p, {name = "pbj_pup:pbj_pup", param2 = facedir})
-
-	elseif num == 2 then
-
-		minetest.set_node(p, {name = "nyancat:nyancat", param2 = facedir})
-
-	else
-		minetest.set_node(p, {name = "moognu:moognu", param2 = facedir})
-	end
+	minetest.swap_node(p, {name = types[num], param2 = facedir})
 
 	for i = 1, length do
 
